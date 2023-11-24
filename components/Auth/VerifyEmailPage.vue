@@ -21,8 +21,10 @@ const handleVerifyEmail = async () => {
 
   if (message?.error?.value?.data?.message) {
       errors.email = message.error.value.data.message;
+      success.email = '';
   } else if (message?.data?.value?.message) {
     success.email = message.data.value.message;
+    errors.email = '';
   }else {
     errors.email = '';
     success.email = '';
