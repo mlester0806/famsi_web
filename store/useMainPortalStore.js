@@ -99,7 +99,7 @@ export const useMainPortalStore = defineStore('filter', () => {
 
     try {
       const { data } = await useFetch(
-        'http://localhost:8000/api/job-positions/details'
+        'https://famsi-dashboard.tech/api/job-positions/details'
       );
 
       const filteredData = data.value.filter((el) => {
@@ -142,11 +142,11 @@ export const useMainPortalStore = defineStore('filter', () => {
     if (token) {
       try {
         const { data: jobPositionData } = await useFetch(
-          `http://localhost:8000/api/job-positions/details/${id}/${slug}`
+          `https://famsi-dashboard.tech/api/job-positions/details/${id}/${slug}`
         );
 
         const { data: relatedJobsData } = await useFetch(
-          `http://localhost:8000/api/job-positions/related-jobs/${id}`
+          `https://famsi-dashboard.tech/api/job-positions/related-jobs/${id}`
         );
 
         if (jobPositionData.value) {
