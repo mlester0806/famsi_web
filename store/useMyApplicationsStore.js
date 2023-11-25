@@ -96,7 +96,7 @@ export const useMyApplicationsStore = defineStore('applications', () => {
     if (!token) return;
     try {
       const { data } = await useFetch(
-        `http://localhost:8000/api/my-applications/${applicant_id}`
+        `https://famsi-dashboard.tech/api/my-applications/${applicant_id}`
       );
 
       const filteredData = data.value.filter((el) => {
