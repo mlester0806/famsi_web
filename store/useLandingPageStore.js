@@ -71,7 +71,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
   const fetchQualifications = async () => {
     try {
       const { data } = await useFetch(
-        'http://localhost:8000/api/qualifications'
+        'https://famsi-dashboard.tech/api/qualifications'
       );
 
       if (data) {
@@ -84,7 +84,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
 
   const fetchBenefits = async () => {
     try {
-      const { data } = await useFetch('http://localhost:8000/api/benefits');
+      const { data } = await useFetch('https://famsi-dashboard.tech/api/benefits');
 
       if (data) {
         benefits.value = data.value;
@@ -97,7 +97,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
   const fetchCompanyAssignments = async () => {
     try {
       const { data } = await useFetch(
-        'http://localhost:8000/api/company-assignments'
+        'https://famsi-dashboard.tech/api/company-assignments'
       );
 
       if (data) {
@@ -110,7 +110,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
 
   const fetchJobTypes = async () => {
     try {
-      const { data } = await useFetch('http://localhost:8000/api/job-types');
+      const { data } = await useFetch('https://famsi-dashboard.tech/api/job-types');
 
       if (data) {
         jobTypes.value = data.value;
@@ -123,7 +123,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
   const fetchEmploymentTypes = async () => {
     try {
       const { data } = await useFetch(
-        'http://localhost:8000/api/employment-types'
+        'https://famsi-dashboard.tech/api/employment-types'
       );
 
       if (data) {
@@ -136,7 +136,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
 
   const fetchIndustries = async () => {
     try {
-      const { data } = await useFetch('http://localhost:8000/api/industries');
+      const { data } = await useFetch('https://famsi-dashboard.tech/api/industries');
 
       if (data) {
         industries.value = data.value;
@@ -148,7 +148,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
 
   const fetchJobPositions = async () => {
     try {
-      const { data } = await useFetch('http://localhost:8000/api/job-positions/details');
+      const { data } = await useFetch('https://famsi-dashboard.tech/api/job-positions/details');
 
       if (data) {
         jobPositions.value = data.value;
