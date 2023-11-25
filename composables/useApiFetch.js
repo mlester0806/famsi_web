@@ -14,7 +14,7 @@ export function useApiFetch(path, options) {
     };
   }
 
-  return useFetch('http://localhost:8000' + path, {
+  return useFetch('https://famsi-dashboard.tech' + path, {
     credentials: 'include',
     watch: false,
     ...options,
