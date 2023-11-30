@@ -5,7 +5,6 @@ definePageMeta({
 </script>
 
 <template>
-    <div class="w-full">
     <Head>
     <Title>FAMSI Website | Login</Title>
     <Meta name="description" />
