@@ -8,6 +8,7 @@ const { currentOpenings, jobPositions } = storeToRefs(store);
 
 <template>
   <section
+    id="landing-openings"
     class="bg-trading-tools relative max-w-full sm:mx-4 xl:mx-10 my-24 shadow sm:rounded-2xl overflow-hidden"
   >
     <div class="w-full py-16 flex flex-col items-center">
