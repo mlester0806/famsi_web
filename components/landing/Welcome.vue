@@ -43,22 +43,24 @@ const { welcome } = storeToRefs(store);
           data-aos-delay="700"
           class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-2"
         >
-          <BaseButton
+          <BaseLink
+            href="#landing-requirements"
             class="max-w-full px-8 py-4 bg-gradient-to-r from-[#468ef9] to-[#0c66ee] border border-[#0c66ee] text-white"
           >
             <div class="flex items-center gap-2">
               Get Started
               <IconBottomArrow size="20" />
             </div>
-          </BaseButton>
-          <BaseButton
+          </BaseLink>
+          <BaseLink
+            href="#landing-openings"
             class="max-w-full px-6 py-4 bg-inherit text-[#0c66ee] border border-[#0c66ee] flex items-center justify-center"
           >
             <div class="flex items-center gap-1">
               View Openings
               <IconRightArrow size="20" />
             </div>
-          </BaseButton>
+          </BaseLink>
         </div>
       </div>
       <div class="hidden sm:block col-span-12 lg:col-span-6">
