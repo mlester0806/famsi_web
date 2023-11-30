@@ -18,6 +18,10 @@ if(params.slug[0] && params.slug[1] && query?.expires && query?.signature) {
 </script>
 
 <template>
+    <Head>
+    <Title>FAMSI Website | Verify Email</Title>
+    <Meta name="description" />
+  </Head>
   <!-- <div class="bg-slate-100 h-screen z-50 absolute top-0 w-screen overflow-hidden flex items-center justify-center">
     <div class="flex items-center justify-center">
     <p class="text-3xl font-bold">Verifying Email Address...</p>
