@@ -7,6 +7,11 @@ export default {
 
 <template>
   <div class="w-full">
+    <Head>
+    <Title>FAMSI Website</Title>
+    <Meta name="description" />
+  </Head>
+    
     <!-- Hero section -->
     <LandingWelcome />
 
