@@ -101,22 +101,34 @@ const readMore = `/portal/job/${props.details.id}/${slug}`;
                   v-if="status === 0"
                   class="mx-4 px-4 py-2 bg-red-500 w-max rounded-full text-white"
                 >
-                  Not Qualified
+                  Disqualified
                 </p>
                 <p
                   v-if="status === 1"
                   class="mx-4 px-4 py-2 bg-gray-500 w-max rounded-full text-white"
                 >
-                  In Progress
+                Pending
                 </p>
                 <p
                   v-if="status === 2"
-                  class="mx-4 px-4 py-2 bg-green-500 w-max rounded-full text-white"
+                  class="mx-4 px-4 py-2 bg-yellow-500 w-max rounded-full text-white"
+                >
+                For Interview
+                </p>
+                <p
+                  v-if="status === 3"
+                  class="mx-4 px-4 py-2 bg-orange-500 w-max rounded-full text-white"
+                >
+                In Progress
+                </p>
+                <p
+                  v-if="status === 4"
+                  class="mx-4 px-4 py-2 bg-blue-500 w-max rounded-full text-white"
                 >
                   Qualified
                 </p>
                 <p
-                  v-if="status === 3"
+                  v-if="status === 5"
                   class="mx-4 px-4 py-2 bg-green-500 w-max rounded-full text-white"
                 >
                   Hired
