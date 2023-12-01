@@ -1,10 +1,12 @@
 <script setup>
 import { useMainPortalStore } from '@/store/useMainPortalStore';
 import { useLandingPageStore } from '@/store/useLandingPageStore';
+import { useMyApplicationsStore } from '@/store/useMyApplicationsStore';
 import { ref, watch } from 'vue';
 
 const portal = useMainPortalStore();
 const landingPage = useLandingPageStore();
+const applications = useMyApplicationsStore();
 
 const showAdvancedFilters = ref(false);
 
@@ -231,6 +233,87 @@ const toggleAdvancedFilters = () => {
     v-else
     class="flex flex-col py-8 mx-auto max-w-6xl justify-center items-center space-y-0.5"
   >
+
+    <template v-if="applications.allJobApplications.length > 0">
+    <div class="bg-white shadow-xl text-white py-2 px-2 w-full mb-4">
+        <div class="flex flex-wrap -mx-3">
+          <div class="w-full px-3">
+            <div class="p-5 xl:px-0 md:py-5 space-y-2 flex justify-between items-center">
+              <div class="flex items-center">
+              <h1 class="text-md text-gray-800 pl-3 font-bold">Your current application status: </h1>
+              <h1 class="text-sm text-gray-800">
+                <div class="w-full">
+                <p
+                  v-if="applications.allJobApplications
+          .slice()
+          .reverse()[0].status === 0"
+                  class="mx-4 px-4 py-2 bg-red-500 w-max rounded-full text-white"
+                >
+                  Disqualified
+                </p>
+                <p
+                  v-if="applications.allJobApplications
+          .slice()
+          .reverse()[0].status === 1"
+                  class="mx-4 px-4 py-2 bg-gray-500 w-max rounded-full text-white"
+                >
+                Pending
+                </p>
+                <p
+                  v-if="applications.allJobApplications
+          .slice()
+          .reverse()[0].status === 2"
+                  class="mx-4 px-4 py-2 bg-yellow-500 w-max rounded-full text-white"
+                >
+                For Interview
+                </p>
+                <p
+                  v-if="applications.allJobApplications
+          .slice()
+          .reverse()[0].status === 3"
+                  class="mx-4 px-4 py-2 bg-orange-500 w-max rounded-full text-white"
+                >
+                In Progress
+                </p>
+                <p
+                  v-if="applications.allJobApplications
+          .slice()
+          .reverse()[0].status === 4"
+                  class="mx-4 px-4 py-2 bg-blue-500 w-max rounded-full text-white"
+                >
+                  Qualified
+                </p>
+                <p
+                  v-if="applications.allJobApplications
+          .slice()
+          .reverse()[0].status === 5"
+                  class="mx-4 px-4 py-2 bg-green-500 w-max rounded-full text-white"
+                >
+                  Hired
+                </p>
+              </div>
+              </h1>
+            </div>
+
+            <div class="flex items-center px-3">
+              <h1 class="text-md text-gray-800 pl-3 font-bold">Job Position: </h1>
+              <h1 class="text-sm text-gray-800 pl-3">{{ applications.allJobApplications
+          .slice()
+          .reverse()[0].job_position.title }}</h1>
+            </div>
+
+            <div class="flex items-center px-3">
+              <h1 class="text-md text-gray-800 pl-3 font-bold">Location: </h1>
+              <h1 class="text-sm text-gray-800 pl-3">{{ applications.allJobApplications
+          .slice()
+          .reverse()[0].job_position.location }}</h1>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </template>
+    
     <template v-if="portal.allJobPositions.length === 0">
       <div class="bg-white shadow-xl text-white py-2 px-2 w-full">
         <div class="flex flex-wrap -mx-3">
