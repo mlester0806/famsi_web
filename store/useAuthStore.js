@@ -45,8 +45,6 @@ export const useAuthStore = defineStore('auth', () => {
     });
 
     if (loginResponse.error?.value?.data?.error === 'You need to verify your email first.') {
-      isLoading.value = false;
-
       return navigateTo('/verify-email');
     }
 
@@ -65,8 +63,6 @@ export const useAuthStore = defineStore('auth', () => {
       );
 
       user.value = data.value;
-
-      isLoading.value = false;
 
       return navigateTo('/portal');
     }
@@ -90,6 +86,42 @@ export const useAuthStore = defineStore('auth', () => {
     return verifyEmailResponse;
   };
 
+  const verifyForgotPass = async (credentials) => {
+    isLoading.value = true;
+    await useApiFetch('/sanctum/csrf-cookie');
+
+    const verifyForgotPassResponse = await useApiFetch('/api/verify-forgot-pass', {
+      method: 'POST', 
+      body: credentials,
+    });
+
+    isLoading.value = false;
+
+    return verifyForgotPassResponse;
+  };
+
+  const resetPass = async (credentials) => {
+    isLoading.value = true;
+    await useApiFetch('/sanctum/csrf-cookie');
+
+    const resetPassResponse = await useApiFetch('/api/reset-pass', {
+      method: 'PATCH', 
+      body: credentials,
+    });
+
+    console.log(resetPassResponse);
+
+    if (!resetPassResponse.error?.value?.data?.error) {
+      isLoading.value = false;
+
+      return navigateTo('/login');
+    }
+
+    isLoading.value = false;
+
+    return resetPassResponse;
+  };
+
   const checkEmailVerification = async (credentials) => {
     isLoading.value = true;
     await useApiFetch('/sanctum/csrf-cookie');
@@ -102,25 +134,6 @@ export const useAuthStore = defineStore('auth', () => {
     if(verifyEmailResponse?.error?.value?.data?.message === "Email verification link has expired.") {
       nuxtStorage.localStorage.setData('verification-message', "Email verification link has expired.");
       
-      return navigateTo('/login');
-    }
-
-    if (verifyEmailResponse?.data?.value?.token) {
-      const { data } = await useApiFetch('/api/user', {
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + verifyEmailResponse.data.value.token,
-        },
-      });
-
-      nuxtStorage.localStorage.setData(
-        'Token',
-        verifyEmailResponse.data.value.token,
-        300
-      );
-
-      user.value = data.value;
-
       return navigateTo('/portal');
     }
 
@@ -139,28 +152,28 @@ export const useAuthStore = defineStore('auth', () => {
       body: info,
     });
 
-    // if (registerResponse.data?.value?.token) {
-    //   const { data } = await useApiFetch('/api/user', {
-    //     headers: {
-    //       Accept: 'application/json',
-    //       Authorization: 'Bearer ' + registerResponse.data.value.token,
-    //     },
-    //   });
+    if (registerResponse.data?.value?.token) {
+      const { data } = await useApiFetch('/api/user', {
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + registerResponse.data.value.token,
+        },
+      });
 
-    //   nuxtStorage.localStorage.setData(
-    //     'Token',
-    //     registerResponse.data.value.token,
-    //     300
-    //   );
+      nuxtStorage.localStorage.setData(
+        'Token',
+        registerResponse.data.value.token,
+        300
+      );
 
-    //   user.value = data.value;
+      user.value = data.value;
 
-      
-    // }
+      return navigateTo('/portal');
+    }
 
     isLoading.value = false;
 
-    return navigateTo('/verify-email');
+    return registerResponse;
   };
 
   const application = async (val) => {
@@ -173,7 +186,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     try {
       const { data, error } = await useFetch(
-        'https://famsi-dashboard.tech/api/application',
+        'http://localhost:8000/api/application',
         {
           method: 'POST',
           body: formData,
@@ -193,5 +206,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { user, isLoading, login, verifyEmail, checkEmailVerification, logout, register, application, fetchUser };
+  return { user, isLoading, login, verifyEmail, verifyForgotPass, resetPass, checkEmailVerification, logout, register, application, fetchUser };
 });
