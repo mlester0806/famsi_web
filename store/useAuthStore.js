@@ -209,7 +209,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     try {
       const { data, error } = await useFetch(
-        'http://localhost:8000/api/application',
+        'https://famsi-dashboard.tech/api/application',
         {
           method: 'POST',
           body: formData,
