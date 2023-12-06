@@ -1,17 +1,33 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '@/store/useAuthStore';
+import { RecaptchaV2 } from "@imzdev/vue3-recaptcha-v2";
+
+const handleWidgetId = (widgetId) => {
+  console.log("Widget ID: ", widgetId);
+};
+const handleErrorCalback = () => {
+  console.log("Error callback");
+};
+const handleExpiredCallback = () => {
+  console.log("Expired callback");
+};
+const handleLoadCallback = (response) => {
+  form.value.captcha_token = response;
+};
 
 const auth = useAuthStore();
 
 const form = ref({
   email: '',
   password: '',
+  captcha_token: ''
 });
 
 const errors = reactive({
   email: '',
   password: '',
+  captcha_token: ''
 });
 
 const handleLogin = async () => {
@@ -21,18 +37,30 @@ const handleLogin = async () => {
     if (typeof error.value.data.error !== 'string') {
       if (error.value.data.error.email) {
         errors.email = error.value.data.error.email[0];
+      } else {
+        errors.email = '';
       }
 
       if (error.value.data.error.password) {
         errors.password = error.value.data.error.password[0];
+      } else {
+        errors.password = ''
+      }
+
+      if (error.value.data.error.captcha_token) {
+        errors.captcha_token = error.value.data.error.captcha_token[0];
+      } else {
+        errors.captcha_token = '';
       }
     } else {
       errors.email = error.value.data.error;
       errors.password = '';
+      errors.captcha_token = '';
     }
   } else {
     errors.email = '';
     errors.password = '';
+    errors.captcha_token = '';
   }
 };
 </script>
@@ -53,7 +81,8 @@ const handleLogin = async () => {
         <h1 class="text-xl font-normal">Login your account.</h1>
       </div>
 
-      <form class="w-full py-4 space-y-10" @submit.prevent="handleLogin">
+      <form class="w-full py-4" @submit.prevent="handleLogin">
+        <div class="space-y-10">
         <div>
           <BaseInputField
             id="email"
@@ -75,6 +104,26 @@ const handleLogin = async () => {
             :errors="errors?.password"
           />
         </div>
+
+        <div>
+          <RecaptchaV2
+            size="normal"
+            @widget-id="handleWidgetId"
+            @error-callback="handleErrorCalback"
+            @expired-callback="handleExpiredCallback"
+            @load-callback="handleLoadCallback"
+          />
+          <p class="text-red-500 text-sm mt-2" v-if="errors.captcha_token">
+            {{ errors.captcha_token }}
+          </p>
+        </div>
+      </div>
+
+        <NuxtLink to="/forgot-password" class="flex ml-auto w-max mt-4 mb-6 text-sm">
+          <p class="text-blue-500 hover:text-blue-700">
+            Forgot Password?
+          </p>
+        </NuxtLink>
 
         <div class="flex flex-col space-y-5 w-full">
           <BaseButton
