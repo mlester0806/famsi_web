@@ -23,7 +23,7 @@ const readMore = `/portal/job/${props.details.id}/${slug}`;
 
 const route = useRoute();
 
-const localhostUrl = 'https://famsi-web-a6pqk.ondigitalocean.app';
+const localhostUrl = 'https://famsi-web.site';
 
 const currentPageUrl = `${localhostUrl}${route.fullPath}`;
 
@@ -44,7 +44,7 @@ const linkedinUrl = computed(() => {
 });
 
 const portalUrl = computed(() => {
-  return `https://famsi-web-a6pqk.ondigitalocean.app/portal`;
+  return `https://famsi-web.site/portal`;
 });
 
 const filterIndustryUrl = computed(() => {
