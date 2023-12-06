@@ -45,6 +45,8 @@ export const useAuthStore = defineStore('auth', () => {
     });
 
     if (loginResponse.error?.value?.data?.error === 'You need to verify your email first.') {
+      isLoading.value = false;
+
       return navigateTo('/verify-email');
     }
 
@@ -63,6 +65,8 @@ export const useAuthStore = defineStore('auth', () => {
       );
 
       user.value = data.value;
+
+      isLoading.value = false;
 
       return navigateTo('/portal');
     }
@@ -134,6 +138,25 @@ export const useAuthStore = defineStore('auth', () => {
     if(verifyEmailResponse?.error?.value?.data?.message === "Email verification link has expired.") {
       nuxtStorage.localStorage.setData('verification-message', "Email verification link has expired.");
       
+      return navigateTo('/login');
+    }
+
+    if (verifyEmailResponse?.data?.value?.token) {
+      const { data } = await useApiFetch('/api/user', {
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + verifyEmailResponse.data.value.token,
+        },
+      });
+
+      nuxtStorage.localStorage.setData(
+        'Token',
+        verifyEmailResponse.data.value.token,
+        300
+      );
+
+      user.value = data.value;
+
       return navigateTo('/portal');
     }
 
@@ -152,28 +175,28 @@ export const useAuthStore = defineStore('auth', () => {
       body: info,
     });
 
-    if (registerResponse.data?.value?.token) {
-      const { data } = await useApiFetch('/api/user', {
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + registerResponse.data.value.token,
-        },
-      });
+    // if (registerResponse.data?.value?.token) {
+    //   const { data } = await useApiFetch('/api/user', {
+    //     headers: {
+    //       Accept: 'application/json',
+    //       Authorization: 'Bearer ' + registerResponse.data.value.token,
+    //     },
+    //   });
 
-      nuxtStorage.localStorage.setData(
-        'Token',
-        registerResponse.data.value.token,
-        300
-      );
+    //   nuxtStorage.localStorage.setData(
+    //     'Token',
+    //     registerResponse.data.value.token,
+    //     300
+    //   );
 
-      user.value = data.value;
+    //   user.value = data.value;
 
-      return navigateTo('/portal');
-    }
+      
+    // }
 
     isLoading.value = false;
 
-    return registerResponse;
+    return navigateTo('/verify-email');
   };
 
   const application = async (val) => {
