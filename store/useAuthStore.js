@@ -200,6 +200,9 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const application = async (val) => {
+    let hostedBackend = 'https://famsi-dashboard.tech';
+    let localBackend = 'http://127.0.0.1:8000';
+    
     isLoading.value = true;
 
     const formData = new FormData();
@@ -209,7 +212,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     try {
       const { data, error } = await useFetch(
-        'https://famsi-dashboard.tech/api/application',
+        hostedBackend + '/api/application',
         {
           method: 'POST',
           body: formData,
@@ -229,5 +232,44 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { user, isLoading, login, verifyEmail, verifyForgotPass, resetPass, checkEmailVerification, logout, register, application, fetchUser };
+  const uploadRequirements = async (val, details) => {
+    let hostedBackend = 'https://famsi-dashboard.tech';
+    let localBackend = 'http://127.0.0.1:8000';
+    
+    // isLoading.value = true;
+    const formData = new FormData();
+
+    val.forEach((item, index) => {
+      Object.keys(item).forEach((key) => {
+        formData.append(`${key}_${index + 1}`, item[key]);
+      });
+    });
+
+    formData.append('applicant_id', details.applicant_id);
+    formData.append('job_position_id', details.job_position_id);
+
+    try {
+      const { data, error } = await useFetch(
+        hostedBackend + '/api/upload-requirements',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      if (data) {
+        isLoading.value = false;
+
+        window.location.reload();
+      }
+
+      return error;
+    } catch (error) {
+      console.log(error);
+      isLoading.value = false;
+      return error;
+    }
+  };
+
+  return { user, isLoading, login, verifyEmail, verifyForgotPass, resetPass, checkEmailVerification, logout, register, application, uploadRequirements, fetchUser };
 });

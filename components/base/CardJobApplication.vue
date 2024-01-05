@@ -22,9 +22,10 @@ const readMore = `/portal/job/${props.details.id}/${slug}`;
 
 const route = useRoute();
 
-const localhostUrl = 'https://famsi-web.site';
+const hostedUrl = 'https://famsi-web.site';
+const localhostUrl = 'http://localhost:3000/';
 
-const currentPageUrl = `${localhostUrl}${route.fullPath}`;
+const currentPageUrl = `${hostedUrl}${route.fullPath}`;
 
 const twitterUrl = computed(() => {
   return `https://twitter.com/intent/tweet?url=${currentPageUrl}`;
@@ -43,15 +44,15 @@ const linkedinUrl = computed(() => {
 });
 
 const portalUrl = computed(() => {
-  return `https://famsi-web.site/portal`;
+  return `${hostedUrl}/portal`;
 });
 
 const filterIndustryUrl = computed(() => {
-  return `https://famsi-web.site/portal?industry=${props.details.industry.title}`;
+  return `${hostedUrl}/portal?industry=${props.details.industry.title}`;
 });
 
 const relatedJobLink = (id, title) => {
-  return `${localhostUrl}/portal/job/${id}/${title
+  return `${hostedUrl}/portal/job/${id}/${title
     .toLowerCase()
     .replaceAll(' ', '-')
     .replaceAll('.', '')
@@ -62,12 +63,7 @@ const relatedJobLink = (id, title) => {
 <template>
   <div class="text-white py-5 px-5">
     <div class="flex flex-wrap -mx-3">
-      <BaseBreadCrumbs
-        home="Jobs"
-        :homeLink="portalUrl"
-        :currentPage="details.title"
-        :currentPageLink="currentPageUrl"
-      />
+      <BaseBreadCrumbs home="Jobs" :homeLink="portalUrl" :currentPage="details.title" :currentPageLink="currentPageUrl" />
       <div class="w-full sm:w-1/2 md:w-2/3 px-3 text-left space-y-4">
         <div class="p-5 xl:px-8 md:py-5 space-y-2 bg-white shadow-xl">
           <div class="w-full text-left text-md text-gray-700">
@@ -110,11 +106,8 @@ const relatedJobLink = (id, title) => {
 
               <div class="w-full">
                 <div class="px-4 py-2">
-                  <a
-                    :href="filterIndustryUrl"
-                    class="bg-blue-400 px-3 py-1 rounded-lg text-white hover:underline"
-                    >{{ details.industry.title }}</a
-                  >
+                  <a :href="filterIndustryUrl" class="bg-blue-400 px-3 py-1 rounded-lg text-white hover:underline">{{
+                    details.industry.title }}</a>
                 </div>
               </div>
             </div>
@@ -153,9 +146,7 @@ const relatedJobLink = (id, title) => {
 
         <div class="p-5 xl:px-8 md:py-5 space-y-4 bg-white shadow-xl">
           <div>
-            <h3
-              class="text-2xl font-semibold text-black hover:text-blue-600 hover:text-underline"
-            >
+            <h3 class="text-2xl font-semibold text-black hover:text-blue-600 hover:text-underline">
               Job Description
             </h3>
 

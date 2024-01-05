@@ -18,6 +18,9 @@ export const useLandingPageStore = defineStore('landingPage', () => {
   const industries = ref(null);
   const jobPositions = ref(null);
 
+  let hostedBackend = 'https://famsi-dashboard.tech';
+  let localBackend = 'http://127.0.0.1:8000';
+
   const shortIntroduction = reactive({
     title: 'We at Fully Advanced Manpower Solutions, Inc.',
     description:
@@ -71,7 +74,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
   const fetchQualifications = async () => {
     try {
       const { data } = await useFetch(
-        'https://famsi-dashboard.tech/api/qualifications'
+        hostedBackend + '/api/qualifications'
       );
 
       if (data) {
@@ -84,7 +87,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
 
   const fetchBenefits = async () => {
     try {
-      const { data } = await useFetch('https://famsi-dashboard.tech/api/benefits');
+      const { data } = await useFetch(hostedBackend + '/api/benefits');
 
       if (data) {
         benefits.value = data.value;
@@ -97,7 +100,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
   const fetchCompanyAssignments = async () => {
     try {
       const { data } = await useFetch(
-        'https://famsi-dashboard.tech/api/company-assignments'
+        hostedBackend + '/api/company-assignments'
       );
 
       if (data) {
@@ -110,7 +113,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
 
   const fetchJobTypes = async () => {
     try {
-      const { data } = await useFetch('https://famsi-dashboard.tech/api/job-types');
+      const { data } = await useFetch(hostedBackend + '/api/job-types');
 
       if (data) {
         jobTypes.value = data.value;
@@ -123,7 +126,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
   const fetchEmploymentTypes = async () => {
     try {
       const { data } = await useFetch(
-        'https://famsi-dashboard.tech/api/employment-types'
+        hostedBackend + '/api/employment-types'
       );
 
       if (data) {
@@ -136,7 +139,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
 
   const fetchIndustries = async () => {
     try {
-      const { data } = await useFetch('https://famsi-dashboard.tech/api/industries');
+      const { data } = await useFetch(hostedBackend + '/api/industries');
 
       if (data) {
         industries.value = data.value;
@@ -148,7 +151,7 @@ export const useLandingPageStore = defineStore('landingPage', () => {
 
   const fetchJobPositions = async () => {
     try {
-      const { data } = await useFetch('https://famsi-dashboard.tech/api/job-positions/details');
+      const { data } = await useFetch(hostedBackend + '/api/job-positions/details');
 
       if (data) {
         jobPositions.value = data.value;

@@ -1,5 +1,7 @@
 export function useApiFetch(path, options) {
   let headers = {};
+  let hostedBackend = 'https://famsi-dashboard.tech';
+  let localBackend = 'http://127.0.0.1:8000';
 
   const token = useCookie('XSRF-TOKEN');
 
@@ -14,7 +16,7 @@ export function useApiFetch(path, options) {
     };
   }
 
-  return useFetch('https://famsi-dashboard.tech' + path, {
+  return useFetch(hostedBackend + path, {
     credentials: 'include',
     watch: false,
     ...options,

@@ -36,6 +36,7 @@ const handleSettingsModal = () => {
         </a>
         <!-- Header Icons -->
        <div class="relative xl:flex space-x-5 items-center">
+        <p class="font-semibold text-md text-black">{{ store.user.applicant.first_name }} {{ store.user.applicant.last_name }}</p>
           <!-- Sign In / Register      -->
           <button
             @click="handleSettingsModal"

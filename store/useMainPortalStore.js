@@ -25,6 +25,9 @@ export const useMainPortalStore = defineStore('filter', () => {
   const relatedJobsDetails = ref(null);
   const isLoading = ref(false);
 
+  let hostedBackend = 'https://famsi-dashboard.tech';
+  let localBackend = 'http://127.0.0.1:8000';
+
   watch(filter, (value) => {
     isLoading.value = true;
 
@@ -99,7 +102,7 @@ export const useMainPortalStore = defineStore('filter', () => {
 
     try {
       const { data } = await useFetch(
-        'https://famsi-dashboard.tech/api/job-positions/details'
+        hostedBackend + '/api/job-positions/details'
       );
 
       const filteredData = data.value.filter((el) => {
@@ -142,11 +145,11 @@ export const useMainPortalStore = defineStore('filter', () => {
     if (token) {
       try {
         const { data: jobPositionData } = await useFetch(
-          `https://famsi-dashboard.tech/api/job-positions/details/${id}/${slug}`
+          hostedBackend + `/api/job-positions/details/${id}/${slug}`
         );
 
         const { data: relatedJobsData } = await useFetch(
-          `https://famsi-dashboard.tech/api/job-positions/related-jobs/${id}`
+          hostedBackend + `/api/job-positions/related-jobs/${id}`
         );
 
         if (jobPositionData.value) {

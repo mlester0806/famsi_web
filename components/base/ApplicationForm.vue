@@ -39,8 +39,6 @@ const checkApplications = computed(() => {
   );
 });
 
-console.log(checkApplications);
-
 const applyJob = async () => {
   if (
     !form.value.resume_path ||

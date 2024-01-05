@@ -23,6 +23,9 @@ export const useMyApplicationsStore = defineStore('applications', () => {
   const allJobApplications = ref(null);
   const isLoading = ref(false);
 
+  let hostedBackend = 'https://famsi-dashboard.tech';
+  let localBackend = 'http://127.0.0.1:8000';
+
   watch(filter, (value) => {
     isLoading.value = true;
 
@@ -96,7 +99,7 @@ export const useMyApplicationsStore = defineStore('applications', () => {
     if (!token) return;
     try {
       const { data } = await useFetch(
-        `https://famsi-dashboard.tech/api/my-applications/${applicant_id}`
+        hostedBackend + `/api/my-applications/${applicant_id}`
       );
 
       const filteredData = data.value.filter((el) => {
