@@ -11,7 +11,7 @@ const portal = useMainPortalStore();
 const landingPage = useLandingPageStore();
 const applications = useMyApplicationsStore();
 
-const additionalFiles = JSON.parse(applications.allJobApplications[applications.allJobApplications.length - 1].additional_files);
+const additionalFiles = JSON.parse(applications?.allJobApplications[applications?.allJobApplications.length - 1]?.additional_files);
 
 const alreadySubmitted = ref(Boolean(additionalFiles));
 
