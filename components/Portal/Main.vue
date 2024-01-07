@@ -13,6 +13,8 @@ const applications = useMyApplicationsStore();
 
 let additionalFiles;
 
+  console.log(applications?.allJobApplications);
+
 if (applications?.allJobApplications) {
   additionalFiles = JSON.parse(applications.allJobApplications[applications.allJobApplications.length - 1].additional_files);
 }
