@@ -65,9 +65,11 @@ const toggleAdvancedFilters = () => {
 };
 
 
+console.log(auth.user);
+
 const applicationDetails = reactive({
-  applicant_id: auth.user.applicant.applications[0].applicant_id,
-  job_position_id: auth.user.applicant.applications[0].job_position_id,
+  applicant_id: auth.user.applicant?.applications[0]?.applicant_id,
+  job_position_id: auth.user.applicant?.applications[0]?.job_position_id,
 });
 
 const errors = reactive([
