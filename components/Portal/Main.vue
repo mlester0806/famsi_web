@@ -29,32 +29,33 @@ const form = reactive([
 let fileCount = 1;
 let additionalFilesObj = {};
 
-  if (applications.allJobApplications.length !== 0) {
+if (applications.allJobApplications.length !== 0) {
 
-    if (additionalFiles) {
-Object.keys(additionalFiles).forEach((key) => {
-  if (fileCount === 1) {
-    form.length = 0;
+  if (additionalFiles) {
+
+    Object.keys(additionalFiles).forEach((key) => {
+      if (fileCount === 1) {
+        form.length = 0;
+      }
+
+      if (key.includes('file_name')) {
+        additionalFilesObj.file_name = additionalFiles[key]
+      }
+
+      if (key.includes('file_path')) {
+        additionalFilesObj.file_path = null
+      }
+
+      if (fileCount % 2 === 0) {
+        form.push(additionalFilesObj);
+
+        additionalFilesObj = {};
+      }
+
+      fileCount++;
+    });
   }
-
-  if (key.includes('file_name')) {
-    additionalFilesObj.file_name = additionalFiles[key]
-  }
-
-  if (key.includes('file_path')) {
-    additionalFilesObj.file_path = null
-  }
-
-  if (fileCount % 2 === 0) {
-    form.push(additionalFilesObj);
-
-    additionalFilesObj = {};
-  }
-
-  fileCount++;
-});
-    }
-  }
+}
 
 const showAdvancedFilters = ref(false);
 
