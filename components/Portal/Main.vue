@@ -30,6 +30,8 @@ let fileCount = 1;
 let additionalFilesObj = {};
 
   if (applications.allJobApplications.length !== 0) {
+
+    if (additionalFiles) {
 Object.keys(additionalFiles).forEach((key) => {
   if (fileCount === 1) {
     form.length = 0;
@@ -51,6 +53,7 @@ Object.keys(additionalFiles).forEach((key) => {
 
   fileCount++;
 });
+    }
   }
 
 const showAdvancedFilters = ref(false);
