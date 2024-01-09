@@ -41,6 +41,15 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         await applications.getAllJobApplications(store.user.applicant.id);
       }
 
+        if (to.path === "/portal/my-documents") {
+        await landingPage.fetchCompanyAssignments();
+        await landingPage.fetchJobTypes();
+        await landingPage.fetchEmploymentTypes();
+        await landingPage.fetchIndustries();
+        await landingPage.fetchJobPositions();
+        await applications.getAllJobApplications(store.user.applicant.id);
+      }
+
       if (to.path.includes('/portal/job')) {
         await portal.getJobPositionDetails(
           to.params.slug[0],
