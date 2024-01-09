@@ -66,8 +66,8 @@ const toggleAdvancedFilters = () => {
   <div class="flex flex-col py-8 mx-auto max-w-6xl justify-center items-center space-y-0.5">
     <div class="bg-white shadow-xl text-white py-2 px-2 w-full">
       <div class="flex flex-wrap -mx-3">
-        <h1 v-if="form?.length > 0" class="text-xl font-bold text-gray-800 py-4 px-6">All Uploaded Files</h1>
-        <div v-if="form?.length > 0" class="w-full px-8 text-left">
+        <h1 v-if="form?.length > 0 && form[0]?.file_name" class="text-xl font-bold text-gray-800 py-4 px-6">All Uploaded Files</h1>
+        <div v-if="form?.length > 0 && form[0]?.file_name" class="w-full px-8 text-left">
           <div v-for="(file, index) in form" :key="file.id" class="flex items-center gap-2 p-5 xl:px-0 md:py-3">
             <h1 class="text-md text-gray-800">{{ index + 1 }}: {{ file.file_name }}:</h1>
             <a :href="file.file_path" class="text-blue-500 hover:text-blue-600">{{ file.file_path }}</a>
