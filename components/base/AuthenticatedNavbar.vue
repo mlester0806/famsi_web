@@ -78,7 +78,7 @@ const handleSettingsModal = () => {
                         <a href="/portal/my-submitted-files">
               <button
                 class="block px-4 w-full py-3 text-sm text-gray-700 text-left transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-blue-600">
-                My Submitted Files
+                My Documents
               </button>
             </a>
 
