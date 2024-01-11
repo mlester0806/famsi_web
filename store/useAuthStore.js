@@ -76,6 +76,52 @@ export const useAuthStore = defineStore('auth', () => {
     return loginResponse;
   };
 
+    const googleLogin = async (credentials) => {
+    isLoading.value = true;
+    await useApiFetch("/sanctum/csrf-cookie");
+
+    console.log(credentials);
+
+    const loginResponse = await useApiFetch("/api/google-login", {
+      method: "POST",
+      body: credentials,
+    });
+
+    if (
+      loginResponse.error?.value?.data?.error ===
+      "You need to verify your email first."
+    ) {
+      isLoading.value = false;
+
+      return navigateTo("/verify-email");
+    }
+
+    if (loginResponse.data?.value?.token) {
+      const { data } = await useApiFetch("/api/user", {
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + loginResponse.data.value.token,
+        },
+      });
+
+      nuxtStorage.localStorage.setData(
+        "Token",
+        loginResponse.data.value.token,
+        300
+      );
+
+      user.value = data.value;
+
+      isLoading.value = false;
+
+      return navigateTo("/portal");
+    }
+
+    isLoading.value = false;
+
+    return loginResponse;
+  };
+
   const verifyEmail = async (credentials) => {
     isLoading.value = true;
     await useApiFetch('/sanctum/csrf-cookie');
@@ -271,5 +317,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
-  return { user, isLoading, login, verifyEmail, verifyForgotPass, resetPass, checkEmailVerification, logout, register, application, uploadRequirements, fetchUser };
+  return { user, isLoading, login, googleLogin, verifyEmail, verifyForgotPass, resetPass, checkEmailVerification, logout, register, application, uploadRequirements, fetchUser };
 });
