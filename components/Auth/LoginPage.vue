@@ -3,6 +3,25 @@ import { ref, reactive } from 'vue';
 import { useAuthStore } from '@/store/useAuthStore';
 import { RecaptchaV2 } from "@imzdev/vue3-recaptcha-v2";
 
+import {
+  GoogleSignInButton,
+  decodeCredential
+} from "vue3-google-signin";
+
+const auth = useAuthStore();
+
+// handle success event
+const handleLoginSuccess = async (response) => {
+  const { credential } = response;
+  const userInfo = decodeCredential(credential);
+  await auth.googleLogin(userInfo);
+};
+
+// handle an error event
+const handleLoginError = () => {
+  console.error("Login failed");
+};
+
 const handleWidgetId = (widgetId) => {
   console.log("Widget ID: ", widgetId);
 };
@@ -15,8 +34,6 @@ const handleExpiredCallback = () => {
 const handleLoadCallback = (response) => {
   form.value.captcha_token = response;
 };
-
-const auth = useAuthStore();
 
 const form = ref({
   email: '',
@@ -68,9 +85,7 @@ const handleLogin = async () => {
 <template>
   <!-- component -->
   <div class="min-h-screen flex justify-center items-center bg-white">
-    <div
-      class="p-10 border-[1px] sm:w-1/2 xl:w-[28rem] border-slate-200 rounded-md flex flex-col items-center space-y-3"
-    >
+    <div class="p-10 border-[1px] sm:w-1/2 xl:w-[28rem] border-slate-200 rounded-md flex flex-col items-center space-y-3">
       <div class="py-4">
         <NuxtLink to="/">
           <img class="w-28 xl:w-36" src="@/assets/img/logo/famsi_logo.png" />
@@ -83,41 +98,24 @@ const handleLogin = async () => {
 
       <form class="w-full py-4" @submit.prevent="handleLogin">
         <div class="space-y-10">
-        <div>
-          <BaseInputField
-            id="email"
-            v-model="form.email"
-            type="text"
-            label="Email Address"
-            placeholder="Email Address"
-            :errors="errors?.email"
-          />
-        </div>
+          <div>
+            <BaseInputField id="email" v-model="form.email" type="text" label="Email Address" placeholder="Email Address"
+              :errors="errors?.email" />
+          </div>
 
-        <div>
-          <BaseInputField
-            id="password"
-            v-model="form.password"
-            type="password"
-            label="Password"
-            placeholder="Password"
-            :errors="errors?.password"
-          />
-        </div>
+          <div>
+            <BaseInputField id="password" v-model="form.password" type="password" label="Password" placeholder="Password"
+              :errors="errors?.password" />
+          </div>
 
-        <div>
-          <RecaptchaV2
-            size="normal"
-            @widget-id="handleWidgetId"
-            @error-callback="handleErrorCalback"
-            @expired-callback="handleExpiredCallback"
-            @load-callback="handleLoadCallback"
-          />
-          <p class="text-red-500 text-sm mt-2" v-if="errors.captcha_token">
-            {{ errors.captcha_token }}
-          </p>
+          <div>
+            <RecaptchaV2 size="normal" @widget-id="handleWidgetId" @error-callback="handleErrorCalback"
+              @expired-callback="handleExpiredCallback" @load-callback="handleLoadCallback" />
+            <p class="text-red-500 text-sm mt-2" v-if="errors.captcha_token">
+              {{ errors.captcha_token }}
+            </p>
+          </div>
         </div>
-      </div>
 
         <NuxtLink to="/forgot-password" class="flex ml-auto w-max mt-4 mb-6 text-sm">
           <p class="text-blue-500 hover:text-blue-700">
@@ -126,28 +124,22 @@ const handleLogin = async () => {
         </NuxtLink>
 
         <div class="flex flex-col space-y-5 w-full">
-          <BaseButton
-            type="submit"
-            :disabled="auth.isLoading"
-            class="px-8 xl:px-10 py-3 mt-2 text-white"
-            :class="[
-              auth.isLoading
-                ? 'bg-gradient-to-r from-[#85a5ff] to-[#4b8dff] hover:shadow-none'
-                : 'bg-gradient-to-r from-[#468ef9] to-[#0c66ee]',
-            ]"
-          >
+          <BaseButton type="submit" :disabled="auth.isLoading" class="px-8 xl:px-10 py-3 mt-2 text-white" :class="[
+            auth.isLoading
+              ? 'bg-gradient-to-r from-[#85a5ff] to-[#4b8dff] hover:shadow-none'
+              : 'bg-gradient-to-r from-[#468ef9] to-[#0c66ee]',
+          ]">
             {{ auth.isLoading ? 'Loading...' : 'Log In' }}
           </BaseButton>
-          <div
-            class="flex items-center justify-center border-t-[1px] border-t-slate-300 w-full relative"
-          >
+          <div class="flex items-center justify-center w-full relative">
+            <GoogleSignInButton @success="handleLoginSuccess" @error="handleLoginError"></GoogleSignInButton>
+          </div>
+          <div class="flex items-center justify-center border-t-[1px] border-t-slate-300 w-full relative">
             <div class="-mt-1 font-bod bg-white px-5 absolute">Or</div>
           </div>
           <NuxtLink to="/signup">
-            <BaseButton
-              type="button"
-              class="px-8 w-full xl:px-10 py-3 mt-2 bg-inherit text-gradient border border-[#0c66ee]"
-            >
+            <BaseButton type="button"
+              class="px-8 w-full xl:px-10 py-3 mt-2 bg-inherit text-gradient border border-[#0c66ee]">
               Sign Up
             </BaseButton>
           </NuxtLink>
