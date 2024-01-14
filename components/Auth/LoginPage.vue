@@ -134,20 +134,6 @@ const handleLogin = async () => {
           <div class="flex items-center justify-center w-full relative">
             <GoogleSignInButton @success="handleLoginSuccess" @error="handleLoginError"></GoogleSignInButton>
           </div>
-          <div class="flex items-center justify-center w-full relative">
-            <a href="https://www.facebook.com/"
-              class="flex text-sm items-center bg-blue-700 hover:bg-blue-800 text-white pr-5 py-1.5 rounded-sm">
-              <img src="@/assets/img/fb_icon.png" class="w-4 ml-4 mr-2" alt="FAMSI Logo" />
-              Sign in with Facebook
-            </a>
-          </div>
-          <div class="flex items-center justify-center w-full relative">
-            <a href="https://www.twitter.com/"
-              class="flex text-sm items-center bg-blue-500 hover:bg-blue-600 text-white pr-7 py-1.5 rounded-sm">
-              <img src="@/assets/img/twitter_icon.png" class="w-4 ml-6 mr-2" alt="FAMSI Logo" />
-              Sign in with Twitter
-            </a>
-          </div>
           <div class="flex items-center justify-center border-t-[1px] border-t-slate-300 w-full relative">
             <div class="-mt-1 font-bod bg-white px-5 absolute">Or</div>
           </div>
